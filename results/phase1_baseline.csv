@@ -1,0 +1,9 @@
+experiment_id,sample_id,word_count,expected,classification,ai_probability_percent,detector_version,status,date
+EXP-0001,HBA-b47658b606060a065155,1500,Human,Human,0,2026-11-04-base,completed,2026-11-24
+EXP-0002,HBA-6e2162c958a50cf5142b,1500,Human,Human,0,2026-11-04-base,completed,2026-11-24
+EXP-0003,HBA-58ab5c606860a46456fc,1500,Human,Human,0,2026-11-04-base,completed,2026-11-24
+EXP-0004,HBA-f787642a08259f4ad3f9,1500,Human,Human,0,2026-11-04-base,completed,2026-11-24
+EXP-0005,HBA-a2d56edede53bbe9a8ac,1500,Human,Human,0,2026-11-04-base,completed,2026-11-24
+EXP-0006,HBA-d64fc0156fbd4cbc05f2,1500,Human,Human,0,2026-11-04-base,completed,2026-11-24
+EXP-0007,HBA-9c2c5e101ebee9741e86,1500,Human,Human,0,2026-11-04-base,completed,2026-11-24
+EXP-0008,HBA-371f006cefbddbfba877,1106,Human,,,,pending_credit_limit,
