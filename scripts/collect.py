@@ -168,6 +168,9 @@ def main():
     print(f"Skipped: {skipped}")
     print(f"Failed: {failed}")
 
+    if failed > 0:
+        raise SystemExit(1)
+
 
 if __name__ == "__main__":
     main()
