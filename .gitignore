@@ -1,0 +1,41 @@
+# API credentials and sensitive information
+.env
+.env.*
+!.env.example
+secrets/
+credentials.json
+api_key.txt
+config.local.json
+
+# Python temporary files
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Private research data
+data/private/
+results/private/
+
+# Temporary files and logs
+*.log
+*.tmp
+*.bak
+
+# Windows system files
+Thumbs.db
+Desktop.ini
+
+# macOS system files
+.DS_Store
+
+# Editor settings
+.vscode/
+.idea/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
