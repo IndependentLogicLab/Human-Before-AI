@@ -1,0 +1,63 @@
+name: Human Before AI - Prepare Research Data
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  prepare-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v4
+
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run software tests
+        run: python -m unittest discover -s scripts -p "test_*.py" -v
+
+      - name: Generate research samples
+        run: python scripts/batch_prepare.py
+
+      - name: Validate generated dataset
+        run: |
+          python - <<'PY'
+          import csv
+          import hashlib
+          from pathlib import Path
+
+          manifest = Path("data/manifest.csv")
+
+          with manifest.open(encoding="utf-8") as file:
+              rows = list(csv.DictReader(file))
+
+          if not rows:
+              raise RuntimeError("No research samples generated.")
+
+          for row in rows:
+              content = Path(row["file_path"]).read_bytes()
+              fingerprint = hashlib.sha256(content).hexdigest()
+
+              assert fingerprint == row["sha256"]
+              assert 750 <= len(content.decode("utf-8").split()) <= 1500
+
+          print(f"Successfully validated {len(rows)} samples.")
+          PY
+
+      - name: Upload research dataset
+        uses: actions/upload-artifact@v4
+        with:
+          name: human-before-ai-dataset
+          path: |
+            data/samples/
+            data/manifest.csv
+            sources/catalog.csv
+          retention-days: 7
+          if-no-files-found: error
