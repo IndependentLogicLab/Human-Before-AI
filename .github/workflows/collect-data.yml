@@ -1,0 +1,48 @@
+name: Human Before AI - Collect Historical Data
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: historical-data-collection
+  cancel-in-progress: false
+
+jobs:
+  collect-data:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Download repository
+        uses: actions/checkout@v4
+
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run software tests
+        run: python -m unittest discover -s scripts -p "test_*.py" -v
+
+      - name: Collect historical publications
+        run: python scripts/collect.py
+
+      - name: Display collection results
+        run: |
+          echo "Collected documents:"
+          ls -lh data/raw/
+          echo "Updated source catalog:"
+          cat sources/catalog.csv
+
+      - name: Upload collected documents
+        uses: actions/upload-artifact@v4
+        with:
+          name: historical-source-documents
+          path: |
+            data/raw/
+            sources/catalog.csv
+          retention-days: 7
+          if-no-files-found: error
